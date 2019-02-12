@@ -2,23 +2,33 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!--模型版本-->
   <modelVersion>4.0.0</modelVersion>
 
+  <!--公司或者组织的唯一标志,并且配置时生成的路径也是由此生成，
+  如com.redis,maven会将该项目打成的jar包放本地路径：/com/redis-->
   <groupId>com.redis</groupId>
+  <!--项目的唯一ID,一个groupId下面可能多个项目,就是靠artifactId来区分的-->
   <artifactId>redis-study</artifactId>
+  <!--版本号-->
   <version>1.0-SNAPSHOT</version>
+  <!--项目产生的构件类型,例如jar、war、ear、pom.插件可以创建他们自己的构件类型,所以前面列的不是全部构件类型-->
   <packaging>war</packaging>
 
+  <!--项目的名称,Maven产生的文档用-->
   <name>redis-study Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
+  <!--项目主页的URL,Maven产生的文档用-->
   <url>http://www.example.com</url>
 
+  <!--项目开发者属性,如即时消息如何处理等-->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
+  <!--该元素描述了项目相关的所有依赖.这些依赖组成了项目构建过程中的一个个环节.它们自动从项目定义的仓库中下载.
+  要获取更多信息,请看项目依赖机制.-->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -28,12 +38,19 @@
     </dependency>
   </dependencies>
 
+  <!--构建项目需要的信息-->
   <build>
+    <!--产生的构件的文件名,默认值是${artifactId}-${version}.-->
     <finalName>redis-study</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <!--子项目可以引用的默认插件信息.该插件配置项直到被引用时才会被解析或绑定到生命周期.给定插件的任何本地配置都会覆盖这里的配置-->
+    <pluginManagement>
+      <!--使用的插件列表-->
       <plugins>
+        <!--plugin元素包含描述插件所需要的信息.-->
         <plugin>
+          <!--插件在仓库里的artifact ID-->
           <artifactId>maven-clean-plugin</artifactId>
+          <!--被使用的插件的版本(或版本范围)-->
           <version>3.1.0</version>
         </plugin>
         <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
