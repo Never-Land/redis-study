@@ -13,6 +13,13 @@ public class LoggerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);
 
     public static void main(String[] args){
-        LOGGER.info("test logger input");
+        for (int i = 0; i < 10; i++) {
+            LOGGER.info("test logger input info {}", i);
+            try {
+                float j = i / 0;
+            }catch (Exception e){
+                LOGGER.error("test logger input error ", e);
+            }
+        }
     }
 }
