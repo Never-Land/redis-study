@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL-->
+<Configuration status="INFO">
+    <!--定义需要使用的参数-->
+    <properties>
+        <property name="LOG_FILE_PATH">/data/redisStudy/logs</property>
+        <property name="INFO_LOG_FILE_NAME">info</property>
+        <property name="ERROR_LOG_FILE_NAME">error</property>
+        <property name="PROJECT_NAME">redis-study</property>
+    </properties>
+
+    <!--日志输出位置设置-->
+    <Appenders>
+        <!--控制台日志输出格式设置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!--rollFile文件输出设置-->
+        <RollingFile name="RollingFileInfo" fileName="${LOG_FILE_PATH}/${PROJECT_NAME}-${INFO_LOG_FILE_NAME}.log" filePattern="${LOG_FILE_PATH}/$${date:yyyy-MM-dd}/${PROJECT_NAME}-${INFO_LOG_FILE_NAME}-%d{yyyy-MM-dd-HH}-%i.log">
+            <Filters>
+                <ThresholdFilter level="INFO"/>
+            </Filters>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="20MB" />
+            </Policies>
+            <!--DefaultRolloverStrategy属性如不设置,则默认为最多同一文件夹下7个文件,这里设置了20-->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="RollingFileError" fileName="${LOG_FILE_PATH}/${PROJECT_NAME}-${ERROR_LOG_FILE_NAME}.log" filePattern="${LOG_FILE_PATH}/$${date:yyyy-MM-dd}/${PROJECT_NAME}-${ERROR_LOG_FILE_NAME}-%d{yyyy-MM-dd-HH}-%i.log">
+            <Filters>
+                <ThresholdFilter level="ERROR"/>
+            </Filters>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="20MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <!--<RandomAccessFile name="RandomAccessFile" fileName="asyncWithLocation.log" immediateFlush="false" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RandomAccessFile>-->
+    </Appenders>
+
+    <!--需要记录日志设置-->
+    <Loggers>
+        <!-- <AsyncLogger name="asynLogger" level="trace"
+           includeLocation="true">
+           <AppenderRef ref="RandomAccessFile" />
+       </AsyncLogger> -->
+        <!--负责捕捉需要记录日志事件并将其发送给合适的Appender-->
+        <logger name="com.redis.*" level="INFO" includelocation="true" additivity="true">
+            <appenderRef ref="RollingFileInfo"></appenderRef>
+        </logger>
+
+        <logger name="com.redis.*" level="ERROR" includelocation="true" additivity="true">
+            <appenderRef ref="RollingFileError"/>
+        </logger>
+
+        <!--根Logger的设置-->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileError"/>
+        </Root>
+    </Loggers>
+</Configuration>
