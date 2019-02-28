@@ -3,7 +3,7 @@
 <Configuration status="INFO">
     <!--定义需要使用的参数-->
     <properties>
-        <property name="LOG_FILE_PATH">/data/redisStudy/logs</property>
+        <property name="LOG_FILE_PATH">/redisStudy/logs</property>
         <property name="INFO_LOG_FILE_NAME">info</property>
         <property name="ERROR_LOG_FILE_NAME">error</property>
         <property name="PROJECT_NAME">redis-study</property>
