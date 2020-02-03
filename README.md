@@ -1,7 +1,16 @@
 本工程目的是学习Redis并且使用Redis作为数据落地存储实现一个简单的博客系统.
 
 **准备工作**
-1.maven使用Apache Maven 3.6.0版本,使用的仓库地址是:https://maven.aliyun.com/repository/public
+1.maven使用Apache Maven 3.6.0版本,使用的仓库地址是:https://maven.aliyun.com/repository/public/
+配置阿里云镜像如下:
+<mirrors>
+    <mirror>
+        <id>alimaven</id>
+        <name>aliyun maven</name>
+        <url>https://maven.aliyun.com/repository/public/</url>
+        <mirrorOf>central</mirrorOf>        
+    </mirror>
+</mirrors>
 2.引入Redis包,项目pom文件配置如下:
     <dependency>
         <groupId>redis.clients</groupId>
@@ -16,7 +25,7 @@
 Redis后台直接运行修改配置文件中的daemonize值为yes
 
 首先需要在阿里云安全组中添加入方向的安全组规则,允许外网访问Redis的TCP协议端口号,模仿阿里云已有的安全组规则实例即可,
-如果没有添加允许外网访问Redis的端口号,那么远程连接会一直出现连接超时问题
+如果没有添加允许外网访问Redis的端口号,配置
 出现连接超时问题java.net.SocketTimeoutException: Read timed out
 免密码远程访问阿里云Redis
 修改Redis的配置文件redis.conf把bind 127.0.0.1注释,protected-mode的值修改为no
